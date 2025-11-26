@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
+    testImplementation 'io.cucumber:cucumber-java:7.15.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.15.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.rest-assured:rest-assured:5.5.6'
+    implementation 'org.json:json:20250517'
+}
+
+test {
+    useJUnit()
+}
+
+tasks.register('webTest', Test) {
+    description = 'Runs only the Web Cucumber tests'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    include 'test/java/api/runner/apiRunner.class'
+}
+
+tasks.register('apiTest', Test) {
+    description = 'Runs only the API Cucumber tests'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    include 'test/java/api/runner/apiRunner.class'
+}
+
+/*task runApi(type: JavaExec) {
+    description = "Run Cucumber tests tagged @api"
+    main = "io.cucumber.core.cli.Main"
+    args = [
+            "--plugin", "html:build/reports/cucumber-api.html",
+            "--plugin", "json:build/reports/cucumber-api.json",
+            "--glue", "api.steps",
+            "--tags", "@api",
+            "src/test/resources/features/api"
+    ]
+}*/
