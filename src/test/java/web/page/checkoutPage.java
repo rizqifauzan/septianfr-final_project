@@ -67,7 +67,7 @@ public class checkoutPage {
 
     public checkoutPage(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     public void inputFirstName(String firstName){
@@ -81,7 +81,7 @@ public class checkoutPage {
         last.clear();
         last.sendKeys(lastName);
     }
-`
+
     public void inputZipCode(int zipCode){
         WebElement zip = wait.until(ExpectedConditions.visibilityOfElementLocated(enterZipCode));
         zip.clear();

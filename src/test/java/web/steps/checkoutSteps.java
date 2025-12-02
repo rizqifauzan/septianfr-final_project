@@ -39,6 +39,8 @@ public class checkoutSteps {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-notifications");
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-search-engine-choice-screen");
+        options.addArguments("--window-size=1920,1080");
         options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
 
         driver = new ChromeDriver(options);
