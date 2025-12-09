@@ -71,49 +71,36 @@ public class checkoutPage {
     }
 
     public void inputFirstName(String firstName){
-        WebElement first = wait.until(ExpectedConditions.visibilityOfElementLocated(enterFirstName));
+        WebElement first = wait.until(ExpectedConditions.elementToBeClickable(enterFirstName));
         first.click();
         first.clear();
         first.sendKeys(firstName);
-
-        System.out.println("DEBUG: AFTER FIRST TYPE = " + first.getAttribute("value"));
+        // wait until field actually has the value
+        wait.until(driver -> first.getAttribute("value").equals(firstName));
     }
 
     public void inputLastName(String lastName){
-        WebElement last = wait.until(ExpectedConditions.visibilityOfElementLocated(enterLastName));
+        WebElement last = wait.until(ExpectedConditions.elementToBeClickable(enterLastName));
         last.click();
         last.clear();
         last.sendKeys(lastName);
+        wait.until(driver -> last.getAttribute("value").equals(lastName));
 
-        System.out.println("DEBUG: AFTER LAST TYPE = " + last.getAttribute("value"));
     }
 
     public void inputZipCode(int zipCode){
-        WebElement zip = wait.until(ExpectedConditions.visibilityOfElementLocated(enterZipCode));
+        String zipStr = String.valueOf(zipCode);
+        WebElement zip = wait.until(ExpectedConditions.elementToBeClickable(enterZipCode));
         zip.click();
         zip.clear();
-        zip.sendKeys(String.valueOf(zipCode));
-
-        System.out.println("DEBUG: AFTER ZIP TYPE = " + zip.getAttribute("value"));
+        zip.sendKeys(zipStr);
+        wait.until(driver -> zip.getAttribute("value").equals(zipStr));
     }
 
     public void clickContinueButton(){
-        System.out.println("CHECK BEFORE CLICK:");
-        System.out.println("FIRST NAME VALUE: " + driver.findElement(enterFirstName).getAttribute("value"));
-        System.out.println("LAST NAME VALUE: " + driver.findElement(enterLastName).getAttribute("value"));
-        System.out.println("ZIP CODE VALUE: " + driver.findElement(enterZipCode).getAttribute("value"));
-
-        WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(continueBtn));
-
-        wait.until(ExpectedConditions.elementToBeClickable(btn));
-
-        try {
-            btn.click();
-        } catch (Exception e) {
-            ((JavascriptExecutor)driver).executeScript("arguments[0].click();", btn);
-        }
-
-        // Wait for transition
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(continueBtn));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); arguments[0].click();", btn);
+        // wait for URL
         wait.until(ExpectedConditions.urlContains("checkout-step-two.html"));
     }
 }
