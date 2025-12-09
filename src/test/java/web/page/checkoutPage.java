@@ -89,11 +89,17 @@ public class checkoutPage {
     }
 
     public void clickContinueButton(){
-        WebElement continuebtn = wait.until(ExpectedConditions.elementToBeClickable(continueBtn));
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView(true); arguments[0].click();", continuebtn);
+        WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(continueBtn));
 
-        // Wait until the URL actually changes to step two
+        wait.until(ExpectedConditions.elementToBeClickable(btn));
+
+        try {
+            btn.click();
+        } catch (Exception e) {
+            ((JavascriptExecutor)driver).executeScript("arguments[0].click();", btn);
+        }
+
+        // Wait for transition
         wait.until(ExpectedConditions.urlContains("checkout-step-two.html"));
     }
 }
