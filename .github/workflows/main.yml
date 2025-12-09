@@ -35,7 +35,7 @@ jobs:
         if: always()
         with:
           name: API Test Report
-          path: app/reports
+          path: build/reports/tests/test/
 
   web-test:
     name: Run Web Tests
@@ -74,10 +74,11 @@ jobs:
         if: always()
         with:
           name: Web Test Report
-          path: app/reports
+          path: build/reports/tests/test/
 
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: app/reports
+
